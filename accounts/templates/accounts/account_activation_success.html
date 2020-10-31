@@ -1,0 +1,11 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Success{% endblock title %}
+
+{% block content %}
+<div class="greeting">
+  <p>Congratulations, your account has been activated!
+     <a href="{% url 'shop:product_list' %}">check</a>
+     product list.</p>
+</div>
+{% endblock content %}
