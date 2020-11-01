@@ -146,6 +146,7 @@ if os.environ.get('USE_S3') == 'TRUE':
     USE_S3 = True
 elif os.environ.get('USE_S3') == 'FALSE':
     USE_S3 = False
+
 if USE_S3 == True:
     # aws settings
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
@@ -164,10 +165,11 @@ if USE_S3 == True:
     DEFAULT_FILE_STORAGE = 'myshop.storage_backends.PublicMediaStorage'
 else:
     STATIC_URL = '/static/'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 CART_SESSION_ID = 'cart'
 
@@ -211,13 +213,18 @@ PARLER_LANGUAGES = {
 ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
 # Redis settings
-#REDIS_HOST = 'localhost'
-#REDIS_PORT = 6379
-#REDIS_DB = 1
+REDIS_LOCAL = True
+if os.environ.get('REDIS_LOCAL') == 'TRUE':
+    REDIS_LOCAL = True
+    REDIS_HOST = 'localhost'
+    REDIS_PORT = 6379
+    REDIS_DB = 1
+elif os.environ.get('REDIS_LOCAL') == 'FALSE':
+    REDIS_LOCAL = False
 
 # Heroku settings.
 import django_heroku
-django_heroku.settings(locals())
+django_heroku.settings(locals(), staticfiles=False)
 
 if os.environ.get('DEBUG') == 'TRUE':
     DEBUG = True
