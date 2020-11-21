@@ -169,7 +169,7 @@ else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+#STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 CART_SESSION_ID = 'cart'
 
@@ -213,14 +213,16 @@ PARLER_LANGUAGES = {
 ROSETTA_SHOW_AT_ADMIN_PANEL = True
 
 # Redis settings
-REDIS_LOCAL = True
+REDIS_LOCAL = False
 if os.environ.get('REDIS_LOCAL') == 'TRUE':
     REDIS_LOCAL = True
+elif os.environ.get('REDIS_LOCAL') == 'FALSE':
+    REDIS_LOCAL = False
+
+if REDIS_LOCAL == True:
     REDIS_HOST = 'localhost'
     REDIS_PORT = 6379
     REDIS_DB = 1
-elif os.environ.get('REDIS_LOCAL') == 'FALSE':
-    REDIS_LOCAL = False
 
 # Heroku settings.
 import django_heroku
